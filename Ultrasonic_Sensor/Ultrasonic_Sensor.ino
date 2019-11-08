@@ -45,7 +45,7 @@ void loop(){
  
     HTTPClient http;  //Declare object of class HTTPClient
  
-    http.begin("http://192.168.0.14:3333/store-sensor-data");  //Specify request destination
+    http.begin("http://192.168.0.14:3333/sensor");  //Specify request destination
     http.addHeader("Content-Type", "text/plain");  //Specify content-type header
     
     //Send the request
