@@ -1,6 +1,8 @@
 #include <Ultrasonic.h>
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
+#include <stdio.h>
+#include <string.h> 
 
 // Define o nome do sensor(ultrassom) e onde esta ligado o trig(12) e o echo(13) respectivamente
 Ultrasonic ultrassom(12,13);  
@@ -36,7 +38,7 @@ void loop(){
   Serial.print(distancia);  //  Imprime o valor da variável distancia 
   Serial.println("cm");
   delay(1000);
-  
+
   //Check WiFi connection status
   if(WiFi.status()== WL_CONNECTED){  
     
@@ -45,8 +47,15 @@ void loop(){
     http.begin("http://192.168.0.15:3333/sensor");  //  Destino da requisição
     http.addHeader("Content-Type", "text/plain");  //  Especifice content-type header
     
+    char total[] = "";
+    char a = 'a'; 
+
+    for (i = 1; i <= distancia; ++i){
+      strncat(total, &a, 1 );
+    }
+
     //Send the request
-    int httpCode = http.POST(distancia);   //  Envia a requisição
+    int httpCode = http.POST(total);   //  Envia a requisição
     String payload = http.getString();  //  Get the response payload
  
     Serial.println(payload);  //  Printa o conteudo da requisição
